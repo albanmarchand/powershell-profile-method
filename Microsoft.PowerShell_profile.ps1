@@ -1,3 +1,5 @@
+$BasePath = "C:\project\test-powershell\"
+
 $Abbreviations = @{sf = "financing" }
 $MultipleAbbreviations = @{ mm = "money-market"; mt = "money-market" }
 
@@ -12,7 +14,7 @@ function opensln {
         $ProjectName = $MultipleAbbreviations[$ProjectName]
     }
     Write-Output "Begin search for $ProjectName sln" 
-    $ProjectPath = "C:\project\test-powershell\$ProjectName"
+    $ProjectPath = "$BasePath$ProjectName"
     try {
         $Slnfile = Get-ChildItem -Path $ProjectPath -Include *.docx -Recurse -Name -ErrorAction Stop | Select-Object -First 1
         Write-Output "$ProjectName sln opening"
@@ -30,14 +32,14 @@ function openapp {
     )
     
     Write-Output "Begin search for $ProjectName app folder" 
-    $ProjectPath = "C:\project\test-powershell\$ProjectName"
+    $ProjectPath = "$BasePath$ProjectName"
     if($MultipleAbbreviations.Contains($ProjectName)) {
         $MultipleProjectName = $MultipleAbbreviations[$ProjectName]
-        $ProjectPath = "C:\project\test-powershell\$MultipleProjectName\$ProjectName"
+        $ProjectPath = "$BasePath$MultipleProjectName\$ProjectName"
     } 
     if($Abbreviations.ContainsKey($ProjectName)) {
         $ProjectName = $Abbreviations[$ProjectName]
-        $ProjectPath = "C:\project\test-powershell\$ProjectName"
+        $ProjectPath = "$BasePath$ProjectName"
     }
     try {
         $AppFile = Get-ChildItem -Path $ProjectPath -Include app -Directory -Recurse -ErrorAction Stop
@@ -55,14 +57,14 @@ function opene2e {
     )
     
     Write-Output "Begin search for $ProjectName e2e folder" 
-    $ProjectPath = "C:\project\test-powershell\$ProjectName"
+    $ProjectPath = "$BasePath$ProjectName"
     if($MultipleAbbreviations.Contains($ProjectName)) {
         $MultipleProjectName = $MultipleAbbreviations[$ProjectName]
-        $ProjectPath = "C:\project\test-powershell\$MultipleProjectName\$ProjectName"
+        $ProjectPath = "$BasePath$MultipleProjectName\$ProjectName"
     } 
     if($Abbreviations.ContainsKey($ProjectName)) {
         $ProjectName = $Abbreviations[$ProjectName]
-        $ProjectPath = "C:\project\test-powershell\$ProjectName"
+        $ProjectPath = "$BasePath$ProjectName"
     }
     Write-Output "$ProjectPath"
     try {
@@ -79,17 +81,17 @@ function open {
     param (
         $ProjectName
     )
-    $ProjectAppPath = "C:\project\test-powershell\$ProjectName"
-    $ProjectSlnPath = "C:\project\test-powershell\$ProjectName"
+    $ProjectAppPath = "$BasePath$ProjectName"
+    $ProjectSlnPath = "$BasePath$ProjectName"
     if($Abbreviations.ContainsKey($ProjectName)) {
         $ProjectName = $Abbreviations[$ProjectName]
-        $ProjectAppPath = "C:\project\test-powershell\$ProjectName"
-        $ProjectSlnPath = "C:\project\test-powershell\$ProjectName"
+        $ProjectAppPath = "$BasePath$ProjectName"
+        $ProjectSlnPath = "$BasePath$ProjectName"
     }
     if($MultipleAbbreviations.Contains($ProjectName)) {
         $MultipleProjectName = $MultipleAbbreviations[$ProjectName]
-        $ProjectSlnPath = "C:\project\test-powershell\$MultipleProjectName"
-        $ProjectAppPath = "C:\project\test-powershell\$MultipleProjectName\$ProjectName"
+        $ProjectSlnPath = "$BasePath$MultipleProjectName"
+        $ProjectAppPath = "$BasePath$MultipleProjectName\$ProjectName"
     }
     Write-Output "Begin search for $ProjectName sln and app" 
     try {
